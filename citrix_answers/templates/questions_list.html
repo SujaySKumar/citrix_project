@@ -1,0 +1,169 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Citrix Answers</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<link rel="stylesheet" href="{% static 'css/questions_list.css' %}">
+		<link rel="javascript" href="{% static 'js/questions_list.js' %}">
+		<!-- styles -->
+		<link rel="stylesheet" href="{% static 'assets/css/fancybox/jquery.fancybox.css' %}">
+		<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
+		<link href="{% static 'assets/css/bootstrap-theme.css' %}" rel="stylesheet" />
+		<link rel="stylesheet" href="{% static 'assets/css/slippry.css' %}">
+		<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+		<link rel="stylesheet" href="{% static 'assets/color/default.css' %}">
+		<script src="{% static 'assets/js/modernizr.custom.js' %}"></script>
+		<script src="{% static 'assets/js/custom.js' %}"></script>
+		<script src="{% static 'contactform/contactform.js' %}"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+		<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>		
+		
+	</head>
+	<body>
+	<header>
+	<div id="navigation" class="navbar navbar-inverse navbar-fixed-top default" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Citrix Answers</a>
+			</div>
+			<div class="navigation">
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="current"><a href="/login">Logout</a></li>
+					</ul></nav>
+				</div><!-- /.navbar-collapse -->
+			</div>
+		</div>
+	</div>
+	</header>
+	
+	<div class="container">
+    <div class="row">
+	<section class="content">
+		<div class="col-md-12 col-md-offset-2">
+		<div class="panel panel-default">
+		<div class="panel-body">
+		<div class="pull-right">
+		<form action="/add-question/" method="post">
+			{% csrf_token %}
+			<label for="new_question">Your question: </label>
+			<input id="new_question_title" type="text" name="new_question_title" maxlength="500" required /><br>
+			<textarea id="new_question_description" cols="100" rows="10" name="new_question_description"></textarea>
+			<input type="submit" value="Ask">
+		</form>
+		</div>
+		
+		<div class="table-container">
+			<table class="table table-filter col-md-12">
+				<tbody>
+				{% for question in question_list %}
+				<tr>
+				<td>
+				<div class="media">
+					<a href="#" class="pull-left"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo"></a>
+					<div class="media-body">
+					<span class="media-meta pull-right">{{ question.datetime }} {{ question.user.username }}</span>
+					<a href="question/{{ question.pk }}">
+						<h4 class="title">
+							{{ question.title }}
+							<span class="pull-right pagado">Views: {{ question.views }}</span>
+						</h4>
+					</a>
+					<p class="summary">{{ question.description }}</p>
+					</div>
+				</div>
+				</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		</div>
+		</div>
+		<div class="content-footer"></div>
+		</div>
+	</section>
+
+    </div>
+  </div>
+  <script>
+// Most options demonstrate the non-default behavior
+var simplemde = new SimpleMDE({
+	autofocus: true,
+	autosave: {
+		enabled: true,
+		uniqueId: "MyUniqueID",
+		delay: 1000,
+	},
+	blockStyles: {
+		bold: "__",
+		italic: "_"
+	},
+	element: document.getElementById("MyID"),
+	forceSync: true,
+	hideIcons: ["guide", "heading"],
+	indentWithTabs: false,
+	initialValue: "Hello world!",
+	insertTexts: {
+		horizontalRule: ["", "\n\n-----\n\n"],
+		image: ["![](http://", ")"],
+		link: ["[", "](http://)"],
+		table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+	},
+	lineWrapping: false,
+	parsingConfig: {
+		allowAtxHeaderWithoutSpace: true,
+		strikethrough: false,
+		underscoresBreakWords: true,
+	},
+	placeholder: "Type here...",
+	previewRender: function(plainText) {
+		return customMarkdownParser(plainText); // Returns HTML from a custom parser
+	},
+	previewRender: function(plainText, preview) { // Async method
+		setTimeout(function(){
+			preview.innerHTML = customMarkdownParser(plainText);
+		}, 250);
+
+		return "Loading...";
+	},
+	promptURLs: true,
+	renderingConfig: {
+		singleLineBreaks: false,
+		codeSyntaxHighlighting: true,
+	},
+	shortcuts: {
+		drawTable: "Cmd-Alt-T"
+	},
+	showIcons: ["code", "table"],
+	spellChecker: false,
+	status: false,
+	status: ["autosave", "lines", "words", "cursor"], // Optional usage
+	status: ["autosave", "lines", "words", "cursor", {
+		className: "keystrokes",
+		defaultValue: function(el) {
+			this.keystrokes = 0;
+			el.innerHTML = "0 Keystrokes";
+		},
+		onUpdate: function(el) {
+			el.innerHTML = ++this.keystrokes + " Keystrokes";
+		}
+	}], // Another optional usage, with a custom status bar item that counts keystrokes
+	styleSelectedText: false,
+	tabSize: 4,
+	toolbar: false,
+	toolbarTips: false,
+});
+
+  </script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<!-- <link rel="stylesheet" href="{% static 'css/questions_list.css' %}"> -->
+		<!-- <link rel="javascript" href="{% static 'js/questions_list.js' %}"> -->
+		<link rel="stylesheet" href="{% static 'assets/css/fancybox/jquery.fancybox.css' %}">
+		<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
+		<link href="{% static 'assets/css/bootstrap-theme.css' %}" rel="stylesheet" />
+		<link rel="stylesheet" href="{% static 'assets/css/slippry.css' %}">
+		<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+		<link rel="stylesheet" href="{% static 'assets/color/default.css' %}">
+		<script src="{% static 'assets/js/modernizr.custom.js' %}"></script>
+	</head>
+
+	<header>
+	<div id="navigation" class="navbar navbar-inverse navbar-fixed-top default" role="navigation">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Citrix Answers</a>
+			</div>
+			<div class="navigation">
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="current"><a href="\logout">Logout</a></li>
+					</ul></nav>
+				</div><!-- /.navbar-collapse -->
+			</div>
+		</div>
+	</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<section class="content">
+				<div class="col-md-12 col-md-offset-2">
+				<div class="panel panel-default">
+				<div class="panel-body">
+				<div class="pull-right">
+				<div class="media">
+				<a href="#" class="pull-left"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo"></a>
+				<div class="media-body">
+				<span class="media-meta pull-right">{{ question.datetime }} {{ question.user.username }}</span>
+				<h4 class="title">
+					{{ question.title }}
+				</h4>
+				<p class="summary">{{ question.description }}</p>
+				<span class="pull-right pagado">Views: {{ question.views }}</span>
+				</div>
+				</div>
+				</div>
+				<div class="table-container">
+				<table class="table table-filter col-md-12">
+					<tbody>
+						{% for answer in answer_list %}
+							<tr>
+							<td>
+							<div class="media">
+							<div class="media-body">
+								<span class="media-meta pull-right">{{ answer.created_at.datetime }} {{ answer.user.username }}</span>
+								<h4 class="title">
+								{{ answer.content }}
+								<span class="pull-right pagado">Upvotes: {{ answer.upvotes }}</span>
+								<span class="pull-right pagado">Downvotes: {{ answer.downvotes }}</span>
+									{% if answer.is_solution == 1 %}
+									<span class="pull-right pagado">This answer is an accepted solution</span>
+									{% endif %}
+								</h4>
+							</div>
+							</div>
+							</td>
+							</tr>
+						{% endfor %}
+					<tr>
+					<form action="/add-answer/{{ question.pk }}/" method="post">
+					{% csrf_token %}
+					<label for="your_name">Your answer: </label>
+					<textarea id="new_answer" cols="100" rows="10" name="new_answer"></textarea>
+					<input type="submit" value="OK">
+					</form>
+					</tr>
+					</tbody>
+				</table>
+				</div>
+				</div>
+				</div>
+				<div class="content-footer"></div>
+				</div>
+			</section>
+
+		</div>
+	</div>
+</html>

@@ -1,0 +1,5 @@
+localhost:8000/login
+
+use
+To keep django running : python manage.py runserver
+To create a user : python manage.py createsuperuser`	q1`
