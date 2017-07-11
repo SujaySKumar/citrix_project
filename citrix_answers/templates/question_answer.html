@@ -84,15 +84,15 @@
 							<td>
 							<div class="media-body">
 								<span class="media-meta pull-right">{{ answer.created_at | date:"D d M Y"  }} {{ answer.user.username }}<span class="glyphicon glyphicon-user"></span></p></span>
-								<h5 class="title" ">
+								<h5 class="title">
 								{{ answer.content }}
 								<br>
 								<br>
-								<a href="#" class="btn btn-primary btn-md" style="margin-right: 16px">
-									<span class="glyphicon glyphicon-thumbs-up"></span>  {{ answer.upvotes }}
+								<a href="#" id="{{ answer.id }}_upvotes" class="btn btn-primary btn-md upvotes_button" style="margin-right: 16px">
+									<span class="glyphicon glyphicon-thumbs-up"></span><span>  {{ answer.upvotes }} </span>
 								</a>
-								<a href="#" class="btn btn-warning btn-md" style="margin-right: 16px">
-									<span class="glyphicon glyphicon-thumbs-down"></span>  {{ answer.downvotes }}
+								<a href="#" id="{{ answer.id }}_downvotes" class="btn btn-warning btn-md downvotes_button" style="margin-right: 16px">
+									<span class="glyphicon glyphicon-thumbs-down"></span><span>  {{ answer.downvotes }} </span>
 								</a>
 								<!-- <span class="pull-right pagado">Upvotes: {{ answer.upvotes }}</span> -->
 								<!-- <span class="pull-right pagado">Downvotes: {{ answer.downvotes }}</span> -->
@@ -130,4 +130,46 @@
 		<!-- </div> -->
 	</div>
 </body>
+
+{% block javascript %}
+<script>
+  $(".upvotes_button").click(function(){
+  var answer_id = this.id
+
+  console.log(answer_id)
+
+  $.ajax({
+  url: '/ajax/upvote',
+  data : {
+  'answer_id': answer_id
+  },
+
+  dataType: 'json',
+  success: function(data){
+  $("#"+answer_id).children(0).next().html(data.upvotes);
+  $("#"+answer_id).off()
+  }
+  });
+  });
+
+  $(".downvotes_button").click(function(){
+  var answer_id = this.id
+
+  console.log(answer_id)
+
+  $.ajax({
+  url: '/ajax/downvote',
+  data : {
+  'answer_id': answer_id
+  },
+
+  dataType: 'json',
+  success: function(data){
+  $("#"+answer_id).children(0).next().html(data.downvotes);
+  $("#"+answer_id).off()
+  }
+  });
+  });
+</script>
+{% endblock %}
 </html>

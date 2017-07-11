@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from citrix_answers.models import Question, Answer, Tag
 from django.template import context
 
@@ -54,3 +54,19 @@ def add_question(request):
         tag_object = Tag.objects.get(tag_name=tag)
         question.tags.add(tag_object)
     return HttpResponse("Question added successfully")
+
+def upvote(request):
+        #import ipdb; ipdb.set_trace()
+        answer_id = int(request.GET['answer_id'][:-8])
+        answer = Answer.objects.get(pk=answer_id)
+        answer.upvotes = answer.upvotes+1
+        answer.save()
+        return JsonResponse({'upvotes': answer.upvotes})
+
+def downvote(request):
+        #import ipdb; ipdb.set_trace()
+        answer_id = int(request.GET['answer_id'][:-10])
+        answer = Answer.objects.get(pk=answer_id)
+        answer.downvotes = answer.downvotes+1
+        answer.save()
+        return JsonResponse({'downvotes': answer.downvotes})
