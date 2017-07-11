@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta name="author" content="" />
-		<link rel="stylesheet" href="{% static 'css/questions_list.css' %}">
-		<link rel="javascript" href="{% static 'js/questions_list.js' %}">
+		<link rel="stylesheet" href="{% static 'assets/css/questions_list.css' %}">
+		<link rel="javascript" href="{% static 'assets/js/questions_list.js' %}">
 		<!-- styles -->
 		<link rel="stylesheet" href="{% static 'assets/css/fancybox/jquery.fancybox.css' %}">
 		<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
@@ -16,8 +16,8 @@
 		<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
 		<link rel="stylesheet" href="{% static 'assets/color/default.css' %}">
 		<script src="{% static 'assets/js/modernizr.custom.js' %}"></script>
-		<script src="{% static 'assets/js/custom.js' %}"></script>
-		<script src="{% static 'contactform/contactform.js' %}"></script>
+		<!-- <script src="{% static 'assets/js/custom.js' %}"></script> -->
+		<!-- <script src="{% static 'contactform/contactform.js' %}"></script> -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
@@ -31,7 +31,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.html">Citrix Answers</a>
+						<a class="navbar-brand" href="/homepage">Citrix Answers</a>
 					</div>
 					<div class="navigation">
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
@@ -48,7 +48,7 @@
 			<div class="row">
 				<section class="content">
 					<div class="col-md-7">
-						<h4>Recently Asked Questions...</h4>
+						<h4>Frequently asked questions...</h4>
 						<div class="panel panel-default">
 							<div class="panel-body" style="height: 600px; overflow: auto;">
 								<div class="table-container">
@@ -58,19 +58,22 @@
 											<tr>
 												<td>
 													<div class="media">
-														<a href="#" class="pull-left"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo"></a>
+														<a href="#" class="pull-left"><img src="{% static 'assets/img/User_Icon.jpg' %}" class="media-photo"></a>
 														<div class="media-body">
-															<span class="media-meta pull-right">{{ question.created_at | date:"D d M Y" }} {{ question.user.username }}</span>
 															<a href="question/{{ question.pk }}">
-																<h4 class="title">
+																<h4 class="title" style="color=Black" >
 																	{{ question.title }}
-																	<span class="pull-right pagado">Views: {{ question.views }}</span>
+																	<span class="glyphicon  pull-right">{{ question.views }} Views</span>
 																</h4>
 															</a>
 															<p class="summary">{{ question.description }}</p>
 															{% for tag in question.tags.all %}
--															<span class="pull-right pagado">{{ tag.tag_name }}&nbsp;</span>
--															{% endfor %}
+															<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.tag_name }}&nbsp;</span>
+															{% endfor %}
+															<br>
+															<div topmargin="10px">
+															<span class="media-meta" > Posted by {{ question.user.username }} on {{ question.created_at | date:"D d M Y" }}</span>
+															</div>
 														</div>
 													</div>
 												</td>
@@ -83,13 +86,13 @@
 						</div>
 					</div>
 					<div class="col-md-5">
-						<h4>Search any question.</h4>
+						<h4>Search</h4>
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<form action="#" method="post">
 									{% csrf_token %}
 									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Type Question Here..">
+										<input type="text" class="form-control" placeholder="Type question here..">
 										<div class="input-group-btn">
 											     <button type="button" class="btn btn-primary btn-md">Search</button>
 										</div>
@@ -108,14 +111,15 @@
 									<h5 ><label style="font-weight: 100;">Description: </label></h5>
 									<textarea id="new_question_description" cols="68" rows="8" name="new_question_description"></textarea><br>
 									<br>
-									<select name="question_tags" multiple>
+									<select name="question_tags">
 									  {% for tag in tag_list %}
 									  <option value={{ tag.tag_name }}>{{ tag.tag_name }}</option>
 									  {% endfor %}
 									</select>
+									<br><br>
 									<div class="input-group-btn">
 									<input type="submit" class="btn btn-primary btn-lg" value = "Ask">
-										</div>
+									</div>
 								</form>
 							</div>
 						</div>

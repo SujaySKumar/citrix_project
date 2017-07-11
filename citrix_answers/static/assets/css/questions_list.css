@@ -9,9 +9,6 @@ body {
 	text-align: center;
 }
 .content h4 {
-	text-align: center;
-	color: green;
-	text-align: italic;
 }
 .content .content-footer p {
 	color: #6d6d6d;
@@ -123,7 +120,7 @@ body {
 	color: #999;
 }
 .table-filter .media .title {
-	color: #2BBCDE;
+	color: #2F4F4F;
 	font-size: 14px;
 	font-weight: bold;
 	line-height: normal;
