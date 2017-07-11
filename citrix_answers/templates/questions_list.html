@@ -108,6 +108,11 @@
 									<h5><label>Description: </label></h5>
 									<textarea id="new_question_description" cols="80" rows="8" name="new_question_description"></textarea><br>
 									<br>
+									<select name="question_tags" multiple>
+									  {% for tag in tag_list %}
+									  <option value={{ tag.tag_name }}>{{ tag.tag_name }}</option>
+									  {% endfor %}
+									</select>
 									<div class="input-group-btn">
 									<input type="submit" class="btn btn-primary btn-lg" value = "Ask">
 										</div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from citrix_answers.models import Question, Answer
+from citrix_answers.models import Question, Answer, Tag
 from django.template import context
 
 # Create your views here.
@@ -11,7 +11,11 @@ def home(request):
 def test_view(request):
     if request.user.is_authenticated():
         all_questions = Question.objects.all()
-        context = {'question_list': all_questions}
+        all_tags = Tag.objects.all()
+        context = {
+                'question_list': all_questions,
+                'tag_list': all_tags
+        }
         return render(request, 'questions_list.html', context)
     else:
         return HttpResponse("User is not logged in!")
