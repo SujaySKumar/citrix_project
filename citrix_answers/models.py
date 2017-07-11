@@ -6,6 +6,13 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+class Tag(models.Model):
+    tag_name = models.TextField(max_length=100, blank=True)
+
+    def __unicode__(self):
+        return self.tag_name
+
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     citrix_username = models.TextField(max_length=500, blank=True)
@@ -24,6 +31,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
     user = models.ForeignKey(User, related_name="user_name_question")
+    tags = models.ManyToManyField(Tag)
 
     def __unicode__(self):
         return self.title

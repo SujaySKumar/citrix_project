@@ -7,7 +7,7 @@ from django.template import context
 def home(request):
 	context = {}
 	return render(request, 'homepage.html',context)
-		
+
 def test_view(request):
     if request.user.is_authenticated():
         all_questions = Question.objects.all()
@@ -18,6 +18,8 @@ def test_view(request):
 
 def question_answer_view(request, question_id):
     question = Question.objects.get(pk=question_id)
+    question.views = question.views+1
+    question.save()
     answers = Answer.objects.filter(question=question)
     context = {
         'answer_list': answers,
