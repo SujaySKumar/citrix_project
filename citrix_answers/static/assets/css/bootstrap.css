@@ -4433,7 +4433,7 @@ a.thumbnail.active {
 }
 .alert h4 {
   margin-top: 0;
-  color: inherit;
+  color: DarkBlue;
 }
 .alert .alert-link {
   font-weight: bold;
