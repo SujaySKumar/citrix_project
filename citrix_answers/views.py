@@ -47,5 +47,10 @@ def add_question(request):
         description=request.POST['new_question_description'],
         user=request.user
     )
+
     question.save()
+    question_tags = request.POST.getlist('question_tags')
+    for tag in question_tags:
+        tag_object = Tag.objects.get(tag_name=tag)
+        question.tags.add(tag_object)
     return HttpResponse("Question added successfully")
