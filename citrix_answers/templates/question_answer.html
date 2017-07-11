@@ -49,18 +49,18 @@
 				</div>
 				<div class= "col-md-3">
 				<div class="pull-right">
-				<span class="media-meta">{{ question.created_at | date:"D d M Y" }} {{ question.user.username }}</span>
+				<span class="media-meta">{{ question.datetime }} {{ question.user.username }}</span>
 				<span class="glyphicon glyphicon-user"></span></p>
 				</div>
 				</div>
 				</div>
+				<div class="col-md-9">
 				<h4 class="summary">{{ question.description }}</h4>
+				</div>
+				<div class="col-md-3">
 				<span class="pull-right pagado"><span class="glyphicon">&#xe105;</span> {{ question.views }}</span>
-</div>
-<p>Tags:</p>
-{% for tag in question.tags.all %}
-															<span class="pull-left pagado">{{ tag.tag_name }}&nbsp;</span>
-															{% endfor %}
+				</div>
+				</div>
 				</div>
 				</div>
 				</div>
@@ -77,7 +77,7 @@
 							<tr>
 							<td>
 							<div class="media-body">
-								<span class="media-meta pull-right">{{ answer.created_at | date:"D d M Y" }} {{ answer.user.username }}<span class="glyphicon glyphicon-user"></span></p></span>
+								<span class="media-meta pull-right">{{ answer.created_at.datetime }} {{ answer.user.username }}<span class="glyphicon glyphicon-user"></span></p></span>
 								<h5 class="title" ">
 								{{ answer.content }}
 								<br>
@@ -100,11 +100,23 @@
 							</tr>
 							</div>
 						{% endfor %}
+						
 					</tbody>
+					
 				</table>
 				</div>
 				</div>
 				</div>
+				<div class="col-md-0"></div>
+				<div class="col-md-6">
+				<tr><h3><label for="your_name">Your answer: </label></h3>
+					<form action="/add-answer/{{ question.pk }}/" method="post">
+					{% csrf_token %}
+					<textarea id="new_answer" cols="160" rows="6" name="new_answer" placeholder="Enter your answer here.."></textarea><br><br>
+					<input type="submit" class="btn btn-primary  btn-md"value="OK">
+					</form>
+					</tr>
+					</div>
 				<div class="content-footer"></div>
 				</div>
 			</section>
