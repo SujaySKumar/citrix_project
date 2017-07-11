@@ -56,7 +56,11 @@
 				</div>
 				<h4 class="summary">{{ question.description }}</h4>
 				<span class="pull-right pagado"><span class="glyphicon">&#xe105;</span> {{ question.views }}</span>
-				</div>
+</div>
+<p>Tags:</p>
+{% for tag in question.tags.all %}
+															<span class="pull-left pagado">{{ tag.tag_name }}&nbsp;</span>
+															{% endfor %}
 				</div>
 				</div>
 				</div>

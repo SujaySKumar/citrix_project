@@ -68,6 +68,9 @@
 																</h4>
 															</a>
 															<p class="summary">{{ question.description }}</p>
+															{% for tag in question.tags.all %}
+															<span class="pull-right pagado">{{ tag.tag_name }}&nbsp;</span>
+															{% endfor %}
 														</div>
 													</div>
 												</td>
