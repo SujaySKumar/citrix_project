@@ -12,7 +12,7 @@ def home(request):
 
 def test_view(request):
     if request.user.is_authenticated():
-        all_questions = Question.objects.all()
+        all_questions = Question.objects.all().order_by('-views')
         all_tags = Tag.objects.all()
         context = {
                 'question_list': all_questions,
@@ -26,10 +26,16 @@ def question_answer_view(request, question_id):
     question = Question.objects.get(pk=question_id)
     question.views = question.views+1
     question.save()
-    answers = Answer.objects.filter(question=question)
+    answers = list(Answer.objects.filter(question=question).order_by('-upvotes'))
+    accepted_answer = list(Answer.objects.filter(question=question).filter(is_solution=1))
+
+    if len(accepted_answer) == 1:
+            answers.remove(accepted_answer[0])
+    accepted_answer.extend(answers)
     context = {
-        'answer_list': answers,
-        'question': question
+            'answer_list': accepted_answer,
+            'question': question,
+            #'accepted_answer': accepted_answer
     }
     return render(request, 'question_answer.html', context)
 
@@ -76,7 +82,7 @@ def downvote(request):
 def search(request):
 	idseq = request.POST['search_term'].split()
 	tag_search = request.POST['search_term'].startswith("#")
-	
+
 	if(tag_search):
 		tag = request.POST['search_term'].split()
 		if(len(tag) > 1):
@@ -85,7 +91,7 @@ def search(request):
 			result = Question.objects.filter(tags__tag_name = tag[0][1:])
 	else:
 		result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
-	
+
 	context = {'search_question_list' : result}
 	return render(request, 'search_questions_list.html', context)
 
