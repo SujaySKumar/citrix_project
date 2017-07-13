@@ -37,35 +37,30 @@
 	<div class="container-fluid">
 		<!-- <div class="row"> -->
 			<section class="content">
-				<div class="col-md-12">
 				<div class="panel panel-default">
 				<div class="panel-body">
 				<div class="media">
 				<div class="media-body">
-				<div class="row">
-				<div class="col-md-9">
-				<span style="font-size:25">
-					{{ question.title }}
-				</span>
-				</div>
-				<div class= "col-md-3">
-				<div class="pull-right">
-				<span class="media-meta">{{ question.created_at | date:"D d M Y" }} {{ question.user.username }}</span>
-				<span class="glyphicon glyphicon-user"></span></p>
+				<span style="font-size: 12px"><span class="glyphicon glyphicon-user" style="font-size:15"></span>   {{  question.user.username }}
+					<span class="media-meta pull-right" style="font-size: 12px">Asked on {{ question.created_at | date:"D d M Y"  }} </span>
+				</span>	
+				<div>
+				<div class="col-md-12">
+				<h4><br> <b>{{ question.title }}</b></h4>
 				</div>
 				</div>
 				</div>
-				<div class="col-md-9">
-				<h4 class="summary pull-left" style="line-height:1.25">{{ question.description }}</h4>
-				</div>
-				<div class="col-md-3">
-				<span class="pull-right pagado"><span class="glyphicon">&#xe105;</span> {{ question.views }}</span>
+				<div class="col-md-10">
+				<h4 class="summary pull-left">{{ question.description }}</h4>
 				</div>
 				</div>
+				<span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>Tags:</b></span>
+
 				{% for tag in question.tags.all %}
-					<span class="pull-left pagado" style="background-color:Lavender">{{ tag.tag_name }}</span>
-					<span class="pull-left pagado" >&nbsp;</span>
+					<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.tag_name }}&nbsp;</span>
+					<span class="pull-left pagado" >&nbsp;&nbsp;</span>
 				{% endfor %}
+						<span class="pull-right">{{ question.views }} <b>view(s)</b></span>
 				</div>
 				</div>
 				</div>
@@ -80,25 +75,39 @@
 						<div class="media">
 						{% for answer in answer_list %}
 							<div class="container-fluid">
-							{% if answer.is_solution == 1 %}
+							{% if answer.is_solution == 1 and question.has_solution == 1 %}
 							<tr bgcolor="Lavender">
 							{% else %}
 							<tr bgcolor="WhiteSmoke">
 							{% endif %}
 							<td>
 							<div class="media-body" style="padding: 10px">
-								<div class="col-md-9">
+							<span class="media-meta" style="font-size: 12px"><span class="glyphicon glyphicon-user" style="font-size:15"></span>   {{ answer.user.username }}
+								<span class="media-meta pull-right" style="font-size: 12px">Answered on {{ answer.created_at | date:"D d M Y"  }} </span>
+										</span>			
+								
+								<div class="row">
+								{% if answer.is_solution == 1 and question.has_solution == 1 %}
+								<div class="col-md-1">
+								<br>
+								<i class="fa fa-check" style="font-size: 60px; color:green" aria-hidden="true"></i>
+								<span style="color:black">Accepted Answer</span>
+								</div>
+								<div class="col-md-10">
+								{% else %}
+								<div class="col-md-10 col-md-offset-1">
+								{% endif %}
 								<h5 class="title" style="line-height:1.5" align="justify">
 								<div style="font-size: 15px">{{ answer.content }}</div>
 								<br>
 								<br>
-								<span class="media-meta" style="font-size: 12px">Answered by {{ answer.user.username }} <span class="glyphicon glyphicon-user"></span> on {{ answer.created_at | date:"D d M Y"  }} </p></span>
+								<div class="col-md-4 pull-left">
 								<a href="#" id="{{ answer.id }}_upvotes" class="btn btn-primary btn-md upvotes_button" style="margin-right: 16px">
 									<span class="glyphicon glyphicon-thumbs-up"></span><span>  {{ answer.upvotes }} </span>
 								</a>
 								<a href="#" id="{{ answer.id }}_downvotes" class="btn btn-warning btn-md downvotes_button" style="margin-right: 16px">
 									<span class="glyphicon glyphicon-thumbs-down"></span><span>  {{ answer.downvotes }} </span>
-								</a>
+								</a>								
 								{% if question.user.pk == request.user.pk %}
 								{% if question.has_solution == 0 %}
 								<a href="#" id="{{ answer.id }}_accept_solution" class="btn btn-warning btn-md solution_button" style="margin-right: 16px">
@@ -106,6 +115,8 @@
 								</a>
 								{% endif %}
 								{% endif %}
+								</div>
+								
 								</div>
 								</h5>
 							</div>
@@ -135,7 +146,7 @@
 				</div>
 			</section>
 
-		<!-- </div> -->
+<!-- </div> -->
 	</div>
 </body>
 
