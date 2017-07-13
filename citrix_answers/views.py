@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from citrix_answers.models import Question, Answer, Tag
 from django.template import context
+from django.db.models import Q
+import operator
 
 # Create your views here.
 def home(request):
@@ -70,3 +72,9 @@ def downvote(request):
         answer.downvotes = answer.downvotes+1
         answer.save()
         return JsonResponse({'downvotes': answer.downvotes})
+		
+def search(request):
+	idseq = request.POST['search_term'].split()
+	result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
+	context = {'search_question_list' : result}
+	return render(request, 'search_questions_list.html', context)

@@ -56,17 +56,16 @@
 				</div>
 				</div>
 				<div class="col-md-9">
-				<h4 class="summary">{{ question.description }}</h4>
+				<h4 class="summary pull-left" style="line-height:1.25">{{ question.description }}</h4>
 				</div>
 				<div class="col-md-3">
 				<span class="pull-right pagado"><span class="glyphicon">&#xe105;</span> {{ question.views }}</span>
 				</div>
 				</div>
-				<p>Tags:</p>
-
-{% for tag in question.tags.all %}
-<span class="pull-left pagado">{{ tag.tag_name }}&nbsp;</span>
-{% endfor %}
+				{% for tag in question.tags.all %}
+					<span class="pull-left pagado" style="background-color:Lavender">{{ tag.tag_name }}</span>
+					<span class="pull-left pagado" >&nbsp;</span>
+				{% endfor %}
 				</div>
 				</div>
 				</div>
@@ -76,30 +75,31 @@
 				<div class="panel">
 				<div class="panel-body">
 				<div class="table-container">
-				<table class="table table-filter col-md-12">
+				<table class="table table-filter col-md-12" style="margin-left: 15px margin-right: 15px;">
 					<tbody>
 						<div class="media">
 						{% for answer in answer_list %}
 							<div class="container-fluid">
-							<tr>
+							{% if answer.is_solution == 1 %}
+							<tr bgcolor="Lavender">
+							{% else %}
+							<tr bgcolor="WhiteSmoke">
+							{% endif %}
 							<td>
-							<div class="media-body">
-								<span class="media-meta pull-right">{{ answer.created_at | date:"D d M Y"  }} {{ answer.user.username }}<span class="glyphicon glyphicon-user"></span></p></span>
-								<h5 class="title">
-								{{ answer.content }}
+							<div class="media-body" style="padding: 10px">
+								<div class="col-md-9">
+								<h5 class="title" style="line-height:1.5" align="justify">
+								<div style="font-size: 15px">{{ answer.content }}</div>
 								<br>
 								<br>
+								<span class="media-meta" style="font-size: 12px">Answered by {{ answer.user.username }} <span class="glyphicon glyphicon-user"></span> on {{ answer.created_at | date:"D d M Y"  }} </p></span>
 								<a href="#" id="{{ answer.id }}_upvotes" class="btn btn-primary btn-md upvotes_button" style="margin-right: 16px">
 									<span class="glyphicon glyphicon-thumbs-up"></span><span>  {{ answer.upvotes }} </span>
 								</a>
 								<a href="#" id="{{ answer.id }}_downvotes" class="btn btn-warning btn-md downvotes_button" style="margin-right: 16px">
 									<span class="glyphicon glyphicon-thumbs-down"></span><span>  {{ answer.downvotes }} </span>
 								</a>
-								<!-- <span class="pull-right pagado">Upvotes: {{ answer.upvotes }}</span> -->
-								<!-- <span class="pull-right pagado">Downvotes: {{ answer.downvotes }}</span> -->
-									{% if answer.is_solution == 1 %}
-									<span class="pull-right pagado">This answer is an accepted solution</span>
-									{% endif %}
+								</div>
 								</h5>
 							</div>
 							</div>
@@ -115,11 +115,11 @@
 				</div>
 				</div>
 				<div class="col-md-0"></div>
-				<div class="col-md-6">
+				<div class="col-md-6" style="margin: 15px">
 				<tr><h3><label for="your_name">Your answer: </label></h3>
 					<form action="/add-answer/{{ question.pk }}/" method="post">
 					{% csrf_token %}
-					<textarea id="new_answer" cols="160" rows="6" name="new_answer" placeholder="Enter your answer here.."></textarea><br><br>
+					<textarea id="new_answer" cols="183" rows="6" name="new_answer" placeholder="Enter your answer here.."></textarea><br><br>
 					<input type="submit" class="btn btn-primary  btn-md"value="OK">
 					</form>
 					</tr>

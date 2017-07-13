@@ -47,20 +47,21 @@
 		<div class="container-fluid">
 			<div class="row">
 				<section class="content">
-					<div class="col-md-7">
-						<h4>Frequently asked questions...</h4>
+					<div class="col-md-12">
+						<h4>Search Results...</h4>
+						{% if search_question_list %}
 						<div class="panel panel-default">
 							<div class="panel-body" style="height: 600px; overflow: auto;">
 								<div class="table-container">
 									<table class="table table-filter">
 										<tbody>
-											{% for question in question_list %}
+											{% for question in search_question_list %}
 											<tr>
 												<td>
 													<div class="media">
 														<a href="#" class="pull-left"><img src="{% static 'assets/img/User_Icon.jpg' %}" class="media-photo"></a>
 														<div class="media-body">
-															<a href="question/{{ question.pk }}">
+															<a href="/question/{{ question.pk }}">
 																<h4 class="title" style="color=Black" >
 																	{{ question.title }}
 																	<span class="glyphicon  pull-right">{{ question.views }} Views</span>
@@ -83,45 +84,13 @@
 								</div>
 							</div>
 						</div>
+						{% else %}
+							<div>
+								Your search returned no matches.
+							</div>
+						{% endif %}
 					</div>
 					<div class="col-md-5">
-						<h4>Search</h4>
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<form action="/search/" method="post">
-									{% csrf_token %}
-									<div class="input-group">
-										<input id="search_term" type="text" class="form-control" name="search_term" placeholder="Type question here..">
-										<div class="input-group-btn">
-											     <button type="submit" class="btn btn-primary btn-md">Search</button>
-										</div>
-									</div>
-
-								</form>
-							</div>
-						</div>
-						<h4>Ask Question?</h4>
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<form action="/add-question/" method="post">
-									{% csrf_token %}
-									<h5><label for="new_question" style="font-weight: 100;">Title: </label></h5>
-									<input id="new_question_title" type="text" name="new_question_title" size="70" required /><br>
-									<h5 ><label style="font-weight: 100;">Description: </label></h5>
-									<textarea id="new_question_description" cols="68" rows="8" name="new_question_description"></textarea><br>
-									<br>
-									<select name="question_tags">
-									  {% for tag in tag_list %}
-									  <option value={{ tag.tag_name }}>{{ tag.tag_name }}</option>
-									  {% endfor %}
-									</select>
-									<br><br>
-									<div class="input-group-btn">
-									<input type="submit" class="btn btn-primary btn-lg" value = "Ask">
-									</div>
-								</form>
-							</div>
-						</div>
 					</div>
 					<div class="content-footer"></div>
 				</div>
