@@ -99,6 +99,13 @@
 								<a href="#" id="{{ answer.id }}_downvotes" class="btn btn-warning btn-md downvotes_button" style="margin-right: 16px">
 									<span class="glyphicon glyphicon-thumbs-down"></span><span>  {{ answer.downvotes }} </span>
 								</a>
+								{% if question.user.pk == request.user.pk %}
+								{% if question.has_solution == 0 %}
+								<a href="#" id="{{ answer.id }}_accept_solution" class="btn btn-warning btn-md solution_button" style="margin-right: 16px">
+									<span class="glyphicon glyphicon-ok"></span>
+								</a>
+								{% endif %}
+								{% endif %}
 								</div>
 								</h5>
 							</div>
@@ -168,6 +175,26 @@
   success: function(data){
   $("#"+answer_id).children(0).next().html(data.downvotes);
   $("#"+answer_id).off()
+  }
+  });
+  });
+
+
+  $(".solution_button").click(function(){
+  var answer_id = this.id
+
+  console.log(answer_id)
+
+  $.ajax({
+  url: '/ajax/accept_solution',
+  data : {
+  'answer_id': answer_id
+  },
+
+  dataType: 'json',
+  success: function(data){
+  $(".solution_button").hide()
+  window.location.reload();
   }
   });
   });

@@ -72,9 +72,21 @@ def downvote(request):
         answer.downvotes = answer.downvotes+1
         answer.save()
         return JsonResponse({'downvotes': answer.downvotes})
-		
+
 def search(request):
 	idseq = request.POST['search_term'].split()
 	result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
 	context = {'search_question_list' : result}
 	return render(request, 'search_questions_list.html', context)
+
+def accept_solution(request):
+        answer_id = int(request.GET['answer_id'][:-16])
+        answer = Answer.objects.get(pk=answer_id)
+
+        q = answer.question
+        q.has_solution = 1
+        q.save()
+
+        answer.is_solution = 1
+        answer.save()
+        return JsonResponse({'result': 'success'})

@@ -30,6 +30,9 @@ class Question(models.Model):
     views = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
+
+    has_solution = models.IntegerField(default=0)
+
     user = models.ForeignKey(User, related_name="user_name_question")
     tags = models.ManyToManyField(Tag)
 
@@ -44,7 +47,11 @@ class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
     question = models.ForeignKey(Question, related_name="question_answer")
+
     user = models.ForeignKey(User, related_name="user_name_answer")
+
+    #upvoted_users = models.ManyToManyField(User, related_name="upvoted_user")
+    #downvoted_users = models.ManyToManyField(User, related_name="downvoted_user")
 
     def __unicode__(self):
         return self.content
