@@ -75,7 +75,17 @@ def downvote(request):
 
 def search(request):
 	idseq = request.POST['search_term'].split()
-	result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
+	tag_search = request.POST['search_term'].startswith("#")
+	
+	if(tag_search):
+		tag = request.POST['search_term'].split()
+		if(len(tag) > 1):
+			result = Question.objects.filter(reduce(operator.or_, (Q(tags__tag_name = x[1:]) for x in tag))).order_by('updated_at')
+		else:
+			result = Question.objects.filter(tags__tag_name = tag[0][1:])
+	else:
+		result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
+	
 	context = {'search_question_list' : result}
 	return render(request, 'search_questions_list.html', context)
 
