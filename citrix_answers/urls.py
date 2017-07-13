@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^ajax/upvote/$', views.upvote, name='upvote'),
     url(r'^ajax/downvote/$', views.downvote, name='downvote'),
     url(r'^ajax/accept_solution/$', views.accept_solution, name='accept_solution'),
+    url(r'^ajax/check_spam/$', views.check_spam, name='check_spam'),
 ]

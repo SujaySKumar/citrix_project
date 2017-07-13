@@ -3,6 +3,9 @@ from django.http import HttpResponse, JsonResponse
 from citrix_answers.models import Question, Answer, Tag
 from django.template import context
 from django.db.models import Q
+
+import spam
+
 import operator
 
 # Create your views here.
@@ -50,18 +53,19 @@ def add_answer(request, question_id):
     return HttpResponse("Answer added successfully")
 
 def add_question(request):
-    question = Question(
-        title=request.POST['new_question_title'],
-        description=request.POST['new_question_description'],
-        user=request.user
-    )
+        question_content = request.POST['new_question_title']
+        question = Question(
+                title=request.POST['new_question_title'],
+                description=request.POST['new_question_description'],
+                user=request.user
+        )
 
-    question.save()
-    question_tags = request.POST.getlist('question_tags')
-    for tag in question_tags:
-        tag_object = Tag.objects.get(tag_name=tag)
-        question.tags.add(tag_object)
-    return HttpResponse("Question added successfully")
+        question.save()
+        question_tags = request.POST.getlist('question_tags')
+        for tag in question_tags:
+                tag_object = Tag.objects.get(tag_name=tag)
+                question.tags.add(tag_object)
+        return HttpResponse("Question added successfully")
 
 def upvote(request):
         #import ipdb; ipdb.set_trace()
@@ -106,3 +110,13 @@ def accept_solution(request):
         answer.is_solution = 1
         answer.save()
         return JsonResponse({'result': 'success'})
+
+def check_spam(request):
+        text = request.GET['title_text']
+        filename = 'citrix_answers/data/Data.csv'
+	spam.load(filename)
+	prob = spam.query(text)
+        if prob > 0.5:
+                return JsonResponse({'spam': 'True'})
+        else:
+                return JsonResponse({'spam': 'False'})

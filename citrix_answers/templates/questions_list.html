@@ -130,4 +130,34 @@
 		</div>
 	</div>
 </body>
+{% block javascript %}
+<script>
+  console.log("Whatw");
+  $("#new_question_title").blur(function(){
+  console.log("Why not?");
+  var title_text = $("#new_question_title").val();
+
+  console.log(title_text);
+
+  $.ajax({
+  url: '/ajax/check_spam',
+  data : {
+  'title_text': title_text
+  },
+
+  dataType: 'json',
+  success: function(data){
+  console.log(data.spam)
+  if(data.spam == "True"){
+  $("#new_question_title").css({"background-color": "red"});
+  }
+  else{
+  $("#new_question_title").css({"background-color": "green"});
+  }
+  }
+  });
+  });
+</script>
+{% endblock %}
+
 </html>
