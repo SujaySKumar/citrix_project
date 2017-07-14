@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from citrix_answers.models import Question, Answer, Tag
+from citrix_answers.models import Question, Answer, Tag, Employee
 from django.template import context
+from django.contrib.auth import login, authenticate
 from django.db.models import Q
 
 import spam
 
 import operator
+from citrix_answers.forms import SignUpForm
 
 # Create your views here.
 def home(request):
@@ -120,3 +122,25 @@ def check_spam(request):
                 return JsonResponse({'spam': 'True'})
         else:
                 return JsonResponse({'spam': 'False'})
+				
+def signup(request):
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenticate(username=username, password=raw_password)
+			login(request, user)
+			employee = Employee(
+				citrix_username=request.POST['username'],
+				description=request.POST['description'],
+				designation=request.POST['designation'],
+				team=request.POST['team'],
+				user=user
+			)
+			employee.save()
+			return redirect('login')
+	else:
+		form = SignUpForm()
+	return render(request, 'signup.html', {'form': form})
