@@ -45,7 +45,6 @@ def question_answer_view(request, question_id):
             'answer_list': accepted_answer,
             'question': question,
             'tag_related_question': tag_related_question,
-            #'accepted_answer': accepted_answer
     }
     return render(request, 'question_answer.html', context)
 
@@ -57,7 +56,7 @@ def add_answer(request, question_id):
         user=request.user
     )
     answer.save()
-    return redirect('/home')
+    return redirect('/question/'+str(question.pk))
     #return HttpResponse("Answer added successfully")
 
 def add_question(request):
@@ -69,6 +68,9 @@ def add_question(request):
         )
 
         question.save()
+
+        question_id = question.pk;
+
         question_tags_str = request.POST['multiple_tags'][1:]
         question_tags = question_tags_str.split(",")
         for tag in question_tags:
@@ -79,7 +81,7 @@ def add_question(request):
                         tag_object.save()
 
                 question.tags.add(tag_object)
-        return redirect('/home')
+        return redirect('/question/'+str(question_id))
         #return HttpResponse("Question added successfully")
 
 def upvote(request):
