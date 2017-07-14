@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/test'
+LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/login'
 
 #AUTH_USER_MODEL = 'citrix_answers.User'
