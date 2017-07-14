@@ -68,9 +68,15 @@ def add_question(request):
         )
 
         question.save()
-        question_tags = request.POST.getlist('question_tags')
+        question_tags_str = request.POST['multiple_tags'][1:]
+        question_tags = question_tags_str.split(",")
         for tag in question_tags:
-                tag_object = Tag.objects.get(tag_name=tag)
+                try:
+                        tag_object = Tag.objects.get(tag_name=tag)
+                except:
+                        tag_object = Tag(tag_name=tag)
+                        tag_object.save()
+
                 question.tags.add(tag_object)
         return HttpResponse("Question added successfully")
 

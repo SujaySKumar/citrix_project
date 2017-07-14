@@ -173,6 +173,7 @@
 	  <!-- </select> -->
 	  <div class="col-md-5">
 	    <input id="tags" type="text" class="form-control" name="tags" placeholder="Type tag here..">
+	    <input type="hidden" value="" name="multiple_tags" id="multiple_tags" style="display:none"> </input>
 	  </div><div class="col-md-7">
 	    <button type="button" class="btn btn-info btn-md" onclick="add('text',document.getElementById('tags').value)">
 	      <i class="fa fa-plus" aria-hidden="true"></i>
@@ -241,10 +242,15 @@
 	element.setAttribute("style", "margin-right:15px;margin-left15px;margin-top:15px;margin-bottom:15px;background-color:Lavender");
 	var foo = document.getElementById("fooBar");
 	document.getElementById("tags").value="";
+	document.getElementById("multiple_tags").value += ","+value;
 	//Append the element in page (in span).
 	foo.appendChild(element);
 
-}
+	}
+	$('#myModal').on('loaded.bs.modal', function () {
+	console.log("Whatwhatw");
+	$(this).find('form').trigger('reset');
+	})
 </script>
 
 {% endblock %}
