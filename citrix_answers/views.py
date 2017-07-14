@@ -57,7 +57,8 @@ def add_answer(request, question_id):
         user=request.user
     )
     answer.save()
-    return HttpResponse("Answer added successfully")
+    return redirect('/home')
+    #return HttpResponse("Answer added successfully")
 
 def add_question(request):
         question_content = request.POST['new_question_title']
@@ -78,7 +79,8 @@ def add_question(request):
                         tag_object.save()
 
                 question.tags.add(tag_object)
-        return HttpResponse("Question added successfully")
+        return redirect('/home')
+        #return HttpResponse("Question added successfully")
 
 def upvote(request):
         #import ipdb; ipdb.set_trace()
