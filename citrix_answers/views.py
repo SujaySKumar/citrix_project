@@ -31,6 +31,8 @@ def test_view(request):
 
 def question_answer_view(request, question_id):
     question = Question.objects.get(pk=question_id)
+    question_tags = list(question.tags.all())
+    tag_related_question = Question.objects.filter(reduce(operator.or_, (Q(tags__tag_name = x) for x in question_tags))).order_by('updated_at')
     question.views = question.views+1
     question.save()
     answers = list(Answer.objects.filter(question=question).order_by('-upvotes'))
@@ -42,6 +44,7 @@ def question_answer_view(request, question_id):
     context = {
             'answer_list': accepted_answer,
             'question': question,
+            'tag_related_question': tag_related_question,
             #'accepted_answer': accepted_answer
     }
     return render(request, 'question_answer.html', context)
