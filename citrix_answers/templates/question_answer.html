@@ -34,7 +34,7 @@
 	</header>
 	<body>
 		
-		<div class="container-fluid">
+		<div class="container">
 		<div class="row">
 			<div class="col-md-9">
 				<!-- <div class="row"> -->
@@ -68,6 +68,7 @@
 					</section>
 		<div class="panel-body">
 			<div class="table-container">
+			<h4>{{ answer_list|length }} Answers</h4>
 				<table class="table table-filter col-md-12" style="margin-left: 15px margin-right: 15px;">
 					<tbody>
 						<div class="media">
@@ -136,7 +137,7 @@
 					<tr><h3><label for="your_name">Your answer: </label></h3>
 						<form action="/add-answer/{{ question.pk }}/" method="post">
 							{% csrf_token %}
-							<textarea id="new_answer" style="width:100%" cols="100" rows="6" name="new_answer" placeholder="Enter your answer here.."></textarea><br><br>
+							<textarea id="new_answer" cols="105" rows="6" name="new_answer" placeholder="Enter your answer here.."></textarea><br><br>
 							<input type="submit" class="btn btn-primary  btn-md"value="OK">
 						</form>
 					</tr>
@@ -146,8 +147,9 @@
 	</div>
 	
 	<div class="col-md-3">
-		<div class="panel panel-default">
-							<div class="panel-body" style="height: 600px; overflow: auto;">
+	<br><br><br><br><br><br>
+		<div class="panel">
+							<h4>Related Questions</h4>
 								<div class="table-container">
 									<table class="table table-filter">
 										<tbody>
@@ -156,11 +158,11 @@
 												<td>
 													<div class="media">
 														<div class="media-body">
-															<a href="question/{{ question.pk }}">
+															<a href="/question/{{ question.pk }}">
 																<h4 class="title" style="color=Black" >
 																	{{ question.title }}
-																	<span class="glyphicon  pull-right">{{ question.views }} Views</span>
-																</h4>
+																</h4><span class="glyphicon  pull-right" style="color:crimson">{{ question.views }} View(s)</span>
+																<br>
 															</a>
 															{% for tag in question.tags.all %}
 															<span class="pull-left pagado" style="background-color:Lavender">{{ tag.tag_name }}</span>
