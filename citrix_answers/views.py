@@ -18,9 +18,11 @@ def home(request):
 def test_view(request):
     if request.user.is_authenticated():
         all_questions = Question.objects.all().order_by('-views')
+        unanswered_questions = Question.objects.filter(question_answer=None)
         all_tags = Tag.objects.all()
         context = {
                 'question_list': all_questions,
+                'unanswered_question_list': unanswered_questions,
                 'tag_list': all_tags
         }
         return render(request, 'questions_list.html', context)
@@ -122,7 +124,7 @@ def check_spam(request):
                 return JsonResponse({'spam': 'True'})
         else:
                 return JsonResponse({'spam': 'False'})
-				
+
 def signup(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
