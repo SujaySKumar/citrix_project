@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^homepage', views.home, name='home'),
+	url(r'^signup', views.signup, name='signup'),
     url(r'^test', views.test_view, name='test_view'),
 	url(r'^search/$', views.search, name='search'),
     url(r'^question/(?P<question_id>[0-9]+)/$', views.question_answer_view, name='question_answer_view'),
