@@ -26,7 +26,8 @@
 				</div>
 				<div class="navigation">
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
-						<ul class="nav navbar-nav navbar-right">
+					    <ul class="nav navbar-nav navbar-right">
+					      <li class="current"><a href="/profile/{{ request.user.pk }}">{{ request.user.username }}</a></li>
 							<li class="current"><a href="\logout">Logout</a></li>
 							<li class="current"><a href="\home">Back</a></li>
 						</ul></nav>
@@ -46,7 +47,7 @@
 						<div class="panel-body">
 							<div class="media">
 								<div class="media-body">
-									<span style="font-size: 12px"><i class="fa fa-user" style="font-size: 15px" aria-hidden="true"></i>   {{  question.user.username }}
+									<span style="font-size: 12px"><i class="fa fa-user" style="font-size: 15px" aria-hidden="true"></i>   <a href="/profile/{{ question.user.pk }}">{{  question.user.username }}</a>
 										<span class="media-meta pull-right" style="font-size: 12px">Asked on {{ question.created_at | date:"D d M Y"  }} </span>
 									</span>
 									<div>
@@ -84,7 +85,7 @@
 										{% endif %}
 										<td>
 											<div class="media-body" style="padding: 10px">
-												<span class="media-meta" style="font-size: 12px"><i class="fa fa-user" style="font-size: 15px" aria-hidden="true"></i>  {{ answer.user.username }}
+												<span class="media-meta" style="font-size: 12px"><i class="fa fa-user" style="font-size: 15px" aria-hidden="true"></i>  <a href="/profile/{{ answer.user.pk }}">{{ answer.user.username }}</a>
 													<span class="media-meta pull-right" style="font-size: 12px">Answered on {{ answer.created_at | date:"D d M Y"  }} </span>
 												</span>
 
@@ -172,7 +173,7 @@
 															<span class="pull-left pagado" ></span>
 															{% endfor %}
 															<br>
-															<span class="media-meta" style="margin-top: 10px" > Posted by {{ question.user.username }} on {{ question.created_at | date:"D d M Y" }}</span>
+															<span class="media-meta" style="margin-top: 10px" > Posted by <a href="/profile/{{ question.user.pk }}">{{ question.user.username }}</a> on {{ question.created_at | date:"D d M Y" }}</span>
 														</div>
 													</div>
 												</td>

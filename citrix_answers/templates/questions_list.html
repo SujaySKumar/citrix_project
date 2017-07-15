@@ -20,13 +20,13 @@
 		<!-- <script src="{% static 'assets/js/custom.js' %}"></script> -->
 		<!-- <script src="{% static 'contactform/contactform.js' %}"></script> -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		
+
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 		<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-		
+
 	</head>
 	<body>
 		<header>
@@ -43,7 +43,8 @@
 					</div>
 					<div class="navigation">
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
-							<ul class="nav navbar-nav navbar-right">
+						    <ul class="nav navbar-nav navbar-right">
+						      <li class="current"><a href="/profile/{{ request.user.pk }}">{{ request.user.username }}</a></li>
 								<li class="current"><a href="/login">Logout</a></li>
 							</ul></nav>
 						</div><!-- /.navbar-collapse -->
@@ -64,18 +65,18 @@
 									<button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-search" aria-hidden="true"></i></button>
 								</div>
 							</div>
-							
+
 						</form>
 					</div>
 					<div class="col-md-2 col-md-offset-1">
 						<div class="input-group-btn padding-right">
 							<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Ask Question</button>
-						</div> 
+						</div>
 					</div>
 					<div class="col-md-7" >
 						<h4 style="font-weight:bold">Trending questions...</h4>
 						<div class="panel">
-							
+
 							<div class="table-container">
 								<table class="table table-filter">
 									<tbody>
@@ -96,7 +97,7 @@
 														<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
 														{% endfor %}
 														<br>
-														<span class="media-meta" style="margin-top: 10px" > Posted by {{ question.user.username }} on {{ question.created_at | date:"D d M Y" }}</span>
+														<span class="media-meta" style="margin-top: 10px" > Posted by <a href="/profile/{{ question.user.pk }}">{{ question.user.username }}</a> on {{ question.created_at | date:"D d M Y" }}</span>
 													</div>
 												</div>
 											</td>
@@ -105,13 +106,13 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="col-md-5">
 						<h4 style="font-weight:bold">Unanswered Questions...</h4>
 						<div class="panel">
-							
+
 							<div class="table-container">
 								<table class="table table-filter">
 									<tbody>
@@ -132,7 +133,7 @@
 														<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
 														{% endfor %}
 														<br>
-														<span class="media-meta" style="margin-top: 10px" > Posted by {{ question.user.username }} on {{ question.created_at | date:"D d M Y" }}</span>
+														<span class="media-meta" style="margin-top: 10px" > Posted by <a href="/profile/{{ question.user.pk }}">{{ question.user.username }}</a> on {{ question.created_at | date:"D d M Y" }}</span>
 													</div>
 												</div>
 											</td>
@@ -141,19 +142,19 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="content-footer"></div>
 				</div>
 			</section>
-			
+
 		</div>
 	</div>
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-			
+
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -176,7 +177,7 @@
 								<div class="input-group">
 									{% csrf_token %}
 									{{ tag_form }}
-									
+
 									<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 
 									{{ tag_form.media }}
@@ -191,7 +192,7 @@
 							</form>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</body>
@@ -200,20 +201,20 @@
 			$("#new_question_title").blur(function(){
 				console.log("Why not?");
 				var title_text = $("#new_question_title").val();
-				
+
 				console.log(title_text);
-				
+
 				$.ajax({
 					url: '/ajax/check_spam',
 					data : {
 						'title_text': title_text
 					},
-					
+
 					dataType: 'json',
 					success: function(data){
 						console.log(data.spam)
 						if(data.spam == "True"){
-							
+
 							$("#new_question_title").css({"border-color": "red"});
 							$("#spamyes").css({"color": "red"});
 							$("#spamno").css({"color": "transparent"});
@@ -231,10 +232,10 @@
 		</script>
 		<script>
 		function add(type,value) {
-		
+
 		//Create an input type dynamically.
 		var element = document.createElement("input");
-		
+
 		//Assign different attributes to the element.
 		element.setAttribute("type", type);
 		element.setAttribute("value", value);
@@ -247,15 +248,14 @@
 		document.getElementById("multiple_tags").value += ","+value;
 		//Append the element in page (in span).
 		foo.appendChild(element);
-		
+
 		}
 		$('#myModal').on('loaded.bs.modal', function () {
 		console.log("Whatwhatw");
 		$(this).find('form').trigger('reset');
 		})
 		</script>
-		
+
 		{% endblock %}
-		
+
 		</html>
-				
