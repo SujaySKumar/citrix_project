@@ -8,10 +8,10 @@
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 		<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-		
+
 		<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	</head>
-	
+
 	<header>
 		<div id="navigation" class="navbar navbar-inverse navbar-fixed-top default" role="navigation">
 			<div class="container">
@@ -36,7 +36,7 @@
 		</div>
 	</header>
 	<body>
-		
+
 		<div class="container">
 		<div class="row">
 			<div class="col-md-9">
@@ -48,7 +48,7 @@
 								<div class="media-body">
 									<span style="font-size: 12px"><i class="fa fa-user" style="font-size: 15px" aria-hidden="true"></i>   {{  question.user.username }}
 										<span class="media-meta pull-right" style="font-size: 12px">Asked on {{ question.created_at | date:"D d M Y"  }} </span>
-									</span>	
+									</span>
 									<div>
 										<div class="col-md-12">
 											<h4><br> <b>{{ question.title }}</b></h4>
@@ -60,7 +60,7 @@
 								</div>
 							</div>
 							<span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>Tags:</b></span>
-							
+
 							{% for tag in question.tags.all %}
 							<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.tag_name }}&nbsp;</span>
 							<span class="pull-left pagado" >&nbsp;&nbsp;</span>
@@ -86,8 +86,8 @@
 											<div class="media-body" style="padding: 10px">
 												<span class="media-meta" style="font-size: 12px"><i class="fa fa-user" style="font-size: 15px" aria-hidden="true"></i>  {{ answer.user.username }}
 													<span class="media-meta pull-right" style="font-size: 12px">Answered on {{ answer.created_at | date:"D d M Y"  }} </span>
-												</span>			
-												
+												</span>
+
 												<div class="row">
 													{% if answer.is_solution == 1 and question.has_solution == 1 %}
 													<div class="col-md-1" style="margin-right:10px">
@@ -105,11 +105,11 @@
 																<br>
 																<div class="col-md-4 pull-left">
 																	<a href="#" id="{{ answer.id }}_upvotes" class="btn btn-primary btn-md upvotes_button" style="margin-right: 16px">
-																	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>  {{ answer.upvotes }} </span>
+																	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span>  {{ answer.upvotes }} </span>
 																	</a>
 																	<a href="#" id="{{ answer.id }}_downvotes" class="btn btn-warning btn-md downvotes_button" style="margin-right: 16px">
-																	<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>  {{ answer.downvotes }} </span>
-																	</a>								
+																	<i class="fa fa-thumbs-o-down" aria-hidden="true"></i><span>  {{ answer.downvotes }} </span>
+																	</a>
 																	{% if question.user.pk == request.user.pk %}
 																	{% if question.has_solution == 0 %}
 																	<a href="#" id="{{ answer.id }}_accept_solution" class="btn btn-success btn-md solution_button" >
@@ -120,20 +120,20 @@
 																</div>
 															</h4>
 														</div>
-														
+
 													</div>
 												</div>
 												</div>
 											</td>
 										</tr>
-									
+
 									{% endfor %}
 									</div>
 								</div>
 								</tbody>
-								
+
 							</table>
-						
+
 				</div>
 				<div class="col-md-0"></div>
 				<div class="col-md-6" style="margin: 15px">
@@ -148,7 +148,7 @@
 			</div>
 		</section>
 	</div>
-	
+
 	<div class="col-md-3">
 	<br><br><br><br><br><br>
 		<div class="panel">
@@ -192,54 +192,58 @@
 <script>
 	$(".upvotes_button").click(function(){
 		var answer_id = this.id
-		
+
 		console.log(answer_id)
-		
+
 		$.ajax({
 			url: '/ajax/upvote',
 			data : {
 				'answer_id': answer_id
 			},
-			
+
 			dataType: 'json',
 			success: function(data){
 				$("#"+answer_id).children(0).next().html(data.upvotes);
-				$("#"+answer_id).off()
+	$("#"+answer_id).off()
+	var downvotes_id = answer_id.replace("upvote", "downvote")
+	$("#"+downvotes_id).off()
 			}
 		});
 	});
-	
+
 	$(".downvotes_button").click(function(){
 		var answer_id = this.id
-		
+
 		console.log(answer_id)
-		
+
 		$.ajax({
 			url: '/ajax/downvote',
 			data : {
 				'answer_id': answer_id
 			},
-			
+
 			dataType: 'json',
 			success: function(data){
 				$("#"+answer_id).children(0).next().html(data.downvotes);
-				$("#"+answer_id).off()
+	$("#"+answer_id).off()
+	var upvotes_id = answer_id.replace("downvote", "upvote")
+	$("#"+upvotes_id).off()
 			}
 		});
 	});
-	
-	
+
+
 	$(".solution_button").click(function(){
 		var answer_id = this.id
-		
+
 		console.log(answer_id)
-		
+
 		$.ajax({
 			url: '/ajax/accept_solution',
 			data : {
 				'answer_id': answer_id
 			},
-			
+
 			dataType: 'json',
 			success: function(data){
 				$(".solution_button").hide()
