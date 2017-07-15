@@ -197,3 +197,16 @@ def signup(request):
 	else:
 		form = SignUpForm()
 	return render(request, 'signup.html', {'form': form})
+	
+def userprofile(request, citrix_user_id):
+	employee = Employee.objects.get(user__pk=citrix_user_id)
+	answers = list(Answer.objects.filter(user__pk=citrix_user_id))
+	accepted_answers = list(Answer.objects.filter(user__pk=citrix_user_id).filter(is_solution=1))
+	questions = list(Question.objects.filter(user__pk=citrix_user_id))
+	context = {
+	    'employee' :employee,
+		'accepted_answers_list': accepted_answers,
+		'answers_list': answers,
+		'questions_list': questions		  
+	}
+	return render(request, 'profile.html', context)

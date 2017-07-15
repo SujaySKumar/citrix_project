@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'^ajax/downvote/$', views.downvote, name='downvote'),
     url(r'^ajax/accept_solution/$', views.accept_solution, name='accept_solution'),
     url(r'^ajax/check_spam/$', views.check_spam, name='check_spam'),
-    url('test-autocomplete/$', autocomplete.Select2QuerySetView.as_view(model=Tag, create_field='name',), name='select2_many_to_many_autocomplete'),    
+    url('test-autocomplete/$', autocomplete.Select2QuerySetView.as_view(model=Tag, create_field='name',), name='select2_many_to_many_autocomplete'),
+	url(r'^profile/(?P<citrix_user_id>[0-9]+)', views.userprofile, name='userprofile'),
 ]
