@@ -13,11 +13,23 @@ import operator
 from citrix_answers.forms import SignUpForm, TForm
 
 # Create your views here.
+def login(request):
+	user = authenticate(username=request.POST['username'], password=request.POST['password'])
+	if user.is_authenticated:
+		return redirect('/home/')
+		#return HttpResponse("Logged in")
+	else:
+		return HttpResponse("Not logged in")
+
+def home(request):
+	context = {}
+	return render(request, 'homepage.html',context)
+
 class UpdateView(generic.UpdateView):
     model = Tag
     form_class = TForm
     template_name = 'questions_list.html'
-    
+
     def get(self, request):
 	if request.user.is_authenticated():
 	    form = self.form_class(initial=self.initial)
@@ -33,7 +45,7 @@ class UpdateView(generic.UpdateView):
             return render(request, 'questions_list.html', context)
         else:
             return HttpResponse("User is not logged in!")
-	
+
     def get_object(self):
         return Tag.objects.first()
 
@@ -197,7 +209,7 @@ def signup(request):
 	else:
 		form = SignUpForm()
 	return render(request, 'signup.html', {'form': form})
-	
+
 def userprofile(request, citrix_user_id):
 	employee = Employee.objects.get(user__pk=citrix_user_id)
 	answers = list(Answer.objects.filter(user__pk=citrix_user_id))
@@ -207,6 +219,6 @@ def userprofile(request, citrix_user_id):
 	    'employee' :employee,
 		'accepted_answers_list': accepted_answers,
 		'answers_list': answers,
-		'questions_list': questions		  
+		'questions_list': questions
 	}
 	return render(request, 'profile.html', context)
