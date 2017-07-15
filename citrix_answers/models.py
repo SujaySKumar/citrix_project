@@ -19,7 +19,7 @@ class Employee(models.Model):
     description = models.TextField(max_length=500, blank=True)
     designation = models.CharField(max_length=30, blank=True)
     team = models.CharField(max_length=30, blank=True)
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField(default=10)
 
     def __unicode__(self):
         return self.citrix_username

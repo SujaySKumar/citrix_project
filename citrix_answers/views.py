@@ -72,6 +72,9 @@ def add_answer(request, question_id):
         user=request.user
     )
     answer.save()
+    emp = Employee.objects.get(user = request.user)
+    emp.rating += 5
+    emp.save()
     return redirect('/question/'+str(question.pk))
     #return HttpResponse("Answer added successfully")
 
@@ -84,7 +87,9 @@ def add_question(request):
         )
 
         question.save()
-
+        emp = Employee.objects.get(user = request.user)
+        emp.rating += 2
+        emp.save()
         question_id = question.pk;
 
         question_tags_str = request.POST.getlist('tags')
@@ -105,6 +110,12 @@ def upvote(request):
         answer = Answer.objects.get(pk=answer_id)
         answer.upvotes = answer.upvotes+1
         answer.save()
+        emp = Employee.objects.get(user=answer.user)
+        emp.rating += 2
+        emp.save()
+        emp = Employee.objects.get(user = request.user)
+        emp.rating += 1
+        emp.save()
         return JsonResponse({'upvotes': answer.upvotes})
 
 def downvote(request):
@@ -113,6 +124,12 @@ def downvote(request):
         answer = Answer.objects.get(pk=answer_id)
         answer.downvotes = answer.downvotes+1
         answer.save()
+        emp = Employee.objects.get(user = answer.user)
+        emp.rating -= 1
+        emp.save()
+        emp = Employee.objects.get(user = request.user)
+        emp.rating -= 1
+        emp.save()
         return JsonResponse({'downvotes': answer.downvotes})
 
 def search(request):
@@ -138,6 +155,12 @@ def accept_solution(request):
         q = answer.question
         q.has_solution = 1
         q.save()
+        emp = Employee.objects.get(user = answer.user)
+        emp.rating += 10
+        emp.save()
+        emp = Employee.objects.get(user = request.user)
+        emp.rating += 3
+        emp.save()
 
         answer.is_solution = 1
         answer.save()
