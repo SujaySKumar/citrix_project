@@ -112,8 +112,8 @@
 																	</a>								
 																	{% if question.user.pk == request.user.pk %}
 																	{% if question.has_solution == 0 %}
-																	<a href="#" id="{{ answer.id }}_accept_solution" class="btn btn-warning btn-md solution_button" style="margin-right: 16px">
-																		<span class="glyphicon glyphicon-ok"></span>
+																	<a href="#" id="{{ answer.id }}_accept_solution" class="btn btn-success btn-md solution_button" >
+																		<i class="fa fa-check" style="font-size:16px" aria-hidden="true"></i>
 																	</a>
 																	{% endif %}
 																	{% endif %}
@@ -169,7 +169,7 @@
 															</a>
 															{% for tag in question.tags.all %}
 															<span class="pull-left pagado" style="background-color:Lavender">{{ tag.tag_name }}</span>
-															<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
+															<span class="pull-left pagado" ></span>
 															{% endfor %}
 															<br>
 															<span class="media-meta" style="margin-top: 10px" > Posted by {{ question.user.username }} on {{ question.created_at | date:"D d M Y" }}</span>
