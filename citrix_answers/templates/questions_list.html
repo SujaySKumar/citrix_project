@@ -1,3 +1,4 @@
+{% load static %}
 {% load staticfiles %}
 <html>
 	<head>
@@ -91,7 +92,7 @@
 														</a>
 														<p class="summary">{{ question.description }}</p>
 														{% for tag in question.tags.all %}
-														<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.tag_name }}&nbsp;&nbsp;</span>
+														<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.name }}&nbsp;&nbsp;</span>
 														<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
 														{% endfor %}
 														<br>
@@ -127,7 +128,7 @@
 														</a>
 														<p class="summary">{{ question.description }}</p>
 														{% for tag in question.tags.all %}
-														<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.tag_name }}&nbsp;&nbsp;</span>
+														<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.name }}&nbsp;&nbsp;</span>
 														<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
 														{% endfor %}
 														<br>
@@ -169,16 +170,16 @@
 						<br>
 						<!-- <select name="question_tags"> -->
 						<!-- {% for tag in tag_list %} -->
-						<!-- <option value={{ tag.tag_name }}>{{ tag.tagname }}</option> -->
+						<!-- <option value={{ tag.name }}>{{ tag.tagname }}</option> -->
 						<!-- {% endfor %} -->
 						<!-- </select> -->
 								<div class="input-group">
-							<input id="tags" type="text" class="form-control" style="width: 150; height:40px" name="tags" placeholder="Type tag here..">
-							<input type="hidden" value="" name="multiple_tags" id="multiple_tags" style="display:none"> </input>
-					
-							<button type="button" class="btn btn-info btn-lg" onclick="add('text',document.getElementById('tags').value)">
-								<i class="fa fa-plus" aria-hidden="true"></i>
-							</button>
+									{% csrf_token %}
+									{{ tag_form }}
+									
+									<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+									{{ tag_form.media }}
 							</div>
 						<div class="row">
 							<div class="col-md-12">

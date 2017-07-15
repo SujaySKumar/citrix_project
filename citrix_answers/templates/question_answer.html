@@ -62,7 +62,7 @@
 							<span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>Tags:</b></span>
 
 							{% for tag in question.tags.all %}
-							<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.tag_name }}&nbsp;</span>
+							<span class="pull-left pagado" style="background-color:Lavender">&nbsp;&nbsp;{{ tag.name }}&nbsp;</span>
 							<span class="pull-left pagado" >&nbsp;&nbsp;</span>
 							{% endfor %}
 							<span class="pull-right">{{ question.views }} <b>view(s)</b></span>

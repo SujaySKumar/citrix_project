@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Tag(models.Model):
-    tag_name = models.TextField(max_length=100, blank=True)
+    name = models.TextField(max_length=100, blank=True)
 
     def __unicode__(self):
-        return self.tag_name
+        return self.name
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -69,7 +69,7 @@
 															</a>
 															<p class="summary">{{ question.description }}</p>
 															{% for tag in question.tags.all %}
-															<span class="pull-left pagado" style="background-color:Lavender">{{ tag.name }}</span>
+															<span class="pull-left pagado" style="background-color:Lavender">{{ tag.tag_name }}</span>
 															<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
 															{% endfor %}
 															<br>

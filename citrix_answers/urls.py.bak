@@ -1,9 +1,5 @@
 from django.conf.urls import url
-from django.views import generic
 from django.template import Context
-from dal import autocomplete
-from .models import Tag
-from .forms import TForm
 
 from . import views
 
@@ -19,5 +15,5 @@ urlpatterns = [
     url(r'^ajax/downvote/$', views.downvote, name='downvote'),
     url(r'^ajax/accept_solution/$', views.accept_solution, name='accept_solution'),
     url(r'^ajax/check_spam/$', views.check_spam, name='check_spam'),
-    url('test-autocomplete/$', autocomplete.Select2QuerySetView.as_view(model=Tag, create_field='name',), name='select2_many_to_many_autocomplete'),    
+	url('test-autocomplete/$', autocomplete.Select2QuerySetView.as_view(model=Tag, create_field='name',), name='select2_many_to_many_autocomplete'),
 ]

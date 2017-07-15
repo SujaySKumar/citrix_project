@@ -20,6 +20,7 @@ class UpdateView(generic.UpdateView):
     
     def get(self, request):
 	if request.user.is_authenticated():
+	    print "WHAT-----------------------------"
 	    form = self.form_class(initial=self.initial)
             all_questions = Question.objects.all().order_by('-views')
             unanswered_questions = Question.objects.filter(question_answer=None)
@@ -48,7 +49,7 @@ def question_answer_view(request, question_id):
     if len(question_tags) == 0:
             tag_related_question = []
     else:
-            tag_related_question = Question.objects.filter(reduce(operator.or_, (Q(tags__name = x) for x in question_tags))).order_by('updated_at')
+            tag_related_question = Question.objects.filter(reduce(operator.or_, (Q(tags__tag_name = x) for x in question_tags))).order_by('updated_at')
     question.views = question.views+1
     question.save()
     answers = list(Answer.objects.filter(question=question).order_by('-upvotes'))
@@ -87,10 +88,11 @@ def add_question(request):
 
         question_id = question.pk;
 
-        question_tags_str = request.POST.getlist('tags')
-        for tag in question_tags_str:
+        question_tags_str = request.POST['multiple_tags'][1:]
+        question_tags = question_tags_str.split(",")
+        for tag in question_tags:
                 try:
-                        tag_object = Tag.objects.get(pk=tag)
+                        tag_object = Tag.objects.get(tag_name=tag)
                 except:
                         tag_object = Tag(tag_name=tag)
                         tag_object.save()
@@ -122,9 +124,9 @@ def search(request):
 	if(tag_search):
 		tag = request.POST['search_term'].split()
 		if(len(tag) > 1):
-			result = Question.objects.filter(reduce(operator.or_, (Q(tags__name = x[1:]) for x in tag))).order_by('updated_at')
+			result = Question.objects.filter(reduce(operator.or_, (Q(tags__tag_name = x[1:]) for x in tag))).order_by('updated_at')
 		else:
-			result = Question.objects.filter(tags__name = tag[0][1:])
+			result = Question.objects.filter(tags__tag_name = tag[0][1:])
 	else:
 		result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
 
