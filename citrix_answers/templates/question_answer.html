@@ -57,7 +57,7 @@
 									</div>
 								</div>
 								<div class="col-md-10">
-									<h4 class="summary pull-left">{{ question.description }}</h4>
+									<h4 class="summary pull-left">{{ question.description|linebreaks }}</h4>
 								</div>
 							</div>
 							<span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>Tags:</b></span>
@@ -101,7 +101,7 @@
 														<div class="col-md-10 col-md-offset-1">
 															{% endif %}
 															<h4 class="title" style="line-height:1.5" align="justify">
-																<div style="font-size: 15px">{{ answer.content }}</div>
+																<div style="font-size: 15px">{{ answer.content|linebreaks }}</div>
 																<br>
 																<br>
 																<div class="col-md-4 pull-left">
