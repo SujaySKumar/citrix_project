@@ -66,7 +66,7 @@ def question_answer_view(request, question_id):
     if len(question_tags) == 0:
             tag_related_question = []
     else:
-            tag_related_question = list(Question.objects.filter(reduce(operator.or_, (Q(tags__name = x) for x in question_tags))).order_by('updated_at'))
+            tag_related_question = list(Question.objects.filter(reduce(operator.or_, (Q(tags__name__iexact = x) for x in question_tags))).order_by('updated_at'))
             tag_related_question.remove(question)
     question.views = question.views+1
     question.save()
@@ -158,9 +158,9 @@ def search(request):
 	if(tag_search):
 		tag = request.POST['search_term'].split()
 		if(len(tag) > 1):
-			result = Question.objects.filter(reduce(operator.or_, (Q(tags__name = x[1:]) for x in tag))).order_by('updated_at')
+			result = Question.objects.filter(reduce(operator.or_, (Q(tags__name__iexact = x[1:]) for x in tag))).order_by('updated_at')
 		else:
-			result = Question.objects.filter(tags__name = tag[0][1:])
+			result = Question.objects.filter(tags__name__iexact = tag[0][1:])
 	else:
 		result = Question.objects.filter(Q(title__icontains = idseq)|reduce(operator.or_, (Q(title__icontains = x) for x in idseq))).order_by('updated_at')
 
