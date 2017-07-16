@@ -1,6 +1,7 @@
 {% load staticfiles %}
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
 		<link href="{% static 'assets/css/question_and_answer.css' %}" rel="stylesheet" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -141,7 +142,7 @@
 					<tr><h4><label for="your_name">Your answer: </label></h4>
 						<form action="/add-answer/{{ question.pk }}/" method="post">
 							{% csrf_token %}
-							<textarea id="new_answer" cols="105" rows="6" name="new_answer" placeholder="Enter your answer here.."></textarea><br><br>
+							<textarea id="new_answer" cols="105" rows="6" name="new_answer" class="form-control" placeholder="Enter your answer here.."></textarea><br><br>
 							<input type="submit" class="btn btn-primary  btn-md"value="OK">
 						</form>
 					</tr>
