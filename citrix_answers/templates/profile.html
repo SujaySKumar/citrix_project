@@ -4,6 +4,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
 		<link href="{% static 'assets/css/question_and_answer.css' %}" rel="stylesheet" />
+		
+		<link rel="stylesheet" href="{% static 'assets/css/questions_list.css' %}">
+		<link rel="javascript" href="{% static 'assets/js/questions_list.js' %}">
 		<link rel="stylesheet" href="{% static 'assets/color/default.css' %}">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
@@ -145,7 +148,7 @@
 															<div class="media">
 																<div class="media-body">
 																	<a href="/question/{{ answer.question.pk }}">
-																		<h4 class="title" style="color=Black" >
+																		<h4 class="title" style=" font-weight:normal" >
 																			{{ answer.question.title }}
 																		</h4>
 																	</a>
@@ -154,7 +157,7 @@
 																	<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
 																	{% endfor %}
 																	<br>
-																	<span class="media-meta" style="margin-top: 10px" > Posted by {{ answer.question.user.username }} on {{ answer.question.created_at | date:"D d M Y" }}</span>
+																	<span class="media-meta" style="margin-top: 10px" > Posted by <a href="/profile/{{ answer.question.user.pk }}">{{ answer.question.user.username }}</a> on {{ answer.question.created_at | date:"D d M Y" }}</span>
 																</div>
 															</div>
 														</td>
@@ -185,11 +188,11 @@
 															<div class="media">
 																<div class="media-body">
 																	<a href="/question/{{ question.pk }}">
-																		<h4 class="title" style="color=Black" >
+																		<h4 class="title" style="font-weight:normal" >
 																			{{ question.title }}
 																		</h4>
 																	</a>
-																	<p class="summary">{{ question.description }}</p>
+																	<p class="summary" style="font-align:justify">{{ question.description }}</p>
 																	{% for tag in question.tags.all %}
 																	<span class="pull-left pagado" style="background-color:Lavender">{{ tag.tag_name }}</span>
 																	<span class="pull-left pagado" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
