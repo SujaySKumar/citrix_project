@@ -8,10 +8,10 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-		
+
 	</head>
 	<html>
-		
+
 		<body>
 			<header>
 				<div id="navigation" class="navbar navbar-inverse navbar-fixed-top default" role="navigation">
@@ -24,12 +24,12 @@
 								<span class="icon-bar"></span>
 							</button>
 								<a class="navbar-brand" href="/"><img src="{% static 'assets/img/citrix-logo-black.jpg' %}"></img>&nbsp;<span style="font-size:80%">Answers</span></a>
-				
+
 						</div>
 						<div class="navigation">
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
 								<ul class="nav navbar-nav navbar-right">
-									<li class="current"><a href="/login">Logout</a></li>
+									<li class="current"><a href="/logout">Logout</a></li>
 								</ul></nav>
 							</div><!-- /.navbar-collapse -->
 						</div>
@@ -42,10 +42,10 @@
 							<div class="row">
 								<section class="content">
 							<h4 style="font-weight:bold" align="center"></h4>
-								
-								
+
+
 										<div class="row">
-											
+
 											<img src="{% static 'assets/img/profile-pic.jpg' %}" style="width:73%; padding-left:27% "></img>
 												<br>
 												<h4 style="font-weight:bold" align="center">{{ employee.citrix_username }} </h4>
@@ -58,14 +58,14 @@
 															<!-- <tr><td></td> -->
 																<!-- <td>Team</td><td>{{ employee.team }}</td> -->
 															<!-- </tr> -->
-											
+
 															<!-- <tr><td></td> -->
 																<!-- <td>About</td> -->
 																<!-- <td>{{ employee.description }}</td> -->
 															<!-- </tr>	 -->
 													<!-- </tbody> -->
 													<!-- </table>			 -->
-													
+
 													<ul class="list-group">
 														<li class="list-group-item justify-content-between">
     <b>Designation</b></br>
@@ -80,7 +80,7 @@
     <span>{{ employee.description }}</span>
   </li>
 </ul>
-													
+
 												</div>
 												<ul class="list-group">
   <li class="list-group-item justify-content-between">
@@ -97,12 +97,12 @@
   </li>
 </ul>
 											</div>
-								
+
 							</section>
 										</div>
 										</div>
 										</div>
-					
+
 					<div class="col-md-4">
 						<div class="container-fluid">
 							<div class="row">
@@ -145,8 +145,8 @@
 							</div>
 						</div>
 					</div>
-					
-					
+
+
 					<div class="col-md-4">
 						<div class="container-fluid">
 							<div class="row">
@@ -186,7 +186,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
-				
-			</body>									
+
+			</body>

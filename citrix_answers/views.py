@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from citrix_answers.models import Question, Answer, Tag, Employee
 from django.template import context
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.db.models import Q
 from django.views import generic
 from django.urls import reverse_lazy
@@ -13,13 +13,19 @@ import operator
 from citrix_answers.forms import SignUpForm, TForm
 
 # Create your views here.
-def login(request):
+def custom_login(request):
 	user = authenticate(username=request.POST['username'], password=request.POST['password'])
-	if user.is_authenticated:
-		return redirect('/home/')
+	if user is not None:
+                login(request, user)
+		return HttpResponseRedirect('/home/')
 		#return HttpResponse("Logged in")
 	else:
-		return HttpResponse("Not logged in")
+		return HttpResponse("Cannot find user")
+
+
+def custom_logout(request):
+        logout(request)
+	return HttpResponseRedirect('/')
 
 def home(request):
 	context = {}
@@ -44,7 +50,7 @@ class UpdateView(generic.UpdateView):
             }
             return render(request, 'questions_list.html', context)
         else:
-            return HttpResponse("User is not logged in!")
+            return HttpResponse("User is not logged in....!")
 
     def get_object(self):
         return Tag.objects.first()

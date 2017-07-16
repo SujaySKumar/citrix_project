@@ -1,3 +1,4 @@
+
 from django.conf.urls import url
 from django.views import generic
 from django.template import Context
@@ -9,7 +10,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
-    url(r'^login', views.login, name='login'),
+    url(r'^login', views.custom_login, name='custom_login'),
+    url(r'^logout', views.custom_logout, name='custom_logout'),
     url(r'^signup', views.signup, name='signup'),
     url(r'^home', views.UpdateView.as_view(), name='test_view'),
     url(r'^search/$', views.search, name='search'),
