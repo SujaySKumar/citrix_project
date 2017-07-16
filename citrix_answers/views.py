@@ -211,7 +211,7 @@ def signup(request):
 				user=user
 			)
 			employee.save()
-			return redirect('login')
+			return redirect('test_view')
 	else:
 		form = SignUpForm()
 	return render(request, 'signup.html', {'form': form})
