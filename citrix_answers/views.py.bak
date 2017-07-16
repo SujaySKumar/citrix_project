@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from citrix_answers.models import Question, Answer, Tag, Employee
 from django.template import context
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.db.models import Q
 from django.views import generic
 from django.urls import reverse_lazy
@@ -13,11 +13,29 @@ import operator
 from citrix_answers.forms import SignUpForm, TForm
 
 # Create your views here.
+def custom_login(request):
+	user = authenticate(username=request.POST['username'], password=request.POST['password'])
+	if user is not None:
+                login(request, user)
+		return HttpResponseRedirect('/home/')
+		#return HttpResponse("Logged in")
+	else:
+		return HttpResponse("Cannot find user")
+
+
+def custom_logout(request):
+        logout(request)
+	return HttpResponseRedirect('/')
+
+def home(request):
+	context = {}
+	return render(request, 'homepage.html',context)
+
 class UpdateView(generic.UpdateView):
     model = Tag
     form_class = TForm
     template_name = 'questions_list.html'
-    
+
     def get(self, request):
 	if request.user.is_authenticated():
 	    form = self.form_class(initial=self.initial)
@@ -32,8 +50,8 @@ class UpdateView(generic.UpdateView):
             }
             return render(request, 'questions_list.html', context)
         else:
-            return HttpResponse("User is not logged in!")
-	
+            return HttpResponse("User is not logged in....!")
+
     def get_object(self):
         return Tag.objects.first()
 
@@ -193,7 +211,20 @@ def signup(request):
 				user=user
 			)
 			employee.save()
-			return redirect('login')
+			return redirect('test_view')
 	else:
 		form = SignUpForm()
 	return render(request, 'signup.html', {'form': form})
+
+def userprofile(request, citrix_user_id):
+	employee = Employee.objects.get(user__pk=citrix_user_id)
+	answers = list(Answer.objects.filter(user__pk=citrix_user_id))
+	accepted_answers = list(Answer.objects.filter(user__pk=citrix_user_id).filter(is_solution=1))
+	questions = list(Question.objects.filter(user__pk=citrix_user_id))
+	context = {
+	    'employee' :employee,
+		'accepted_answers_list': accepted_answers,
+		'answers_list': answers,
+		'questions_list': questions
+	}
+	return render(request, 'profile.html', context)
