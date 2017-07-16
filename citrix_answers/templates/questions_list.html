@@ -45,7 +45,7 @@
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><nav>
 						    <ul class="nav navbar-nav navbar-right">
 						      <li class="current"><a href="/profile/{{ request.user.pk }}">{{ request.user.username }}</a></li>
-								<li class="current"><a href="/logout">Logout</a></li>
+								<li class="current"><a href="/logout/">Logout</a></li>
 							</ul></nav>
 						</div><!-- /.navbar-collapse -->
 					</div>
@@ -85,7 +85,7 @@
 											<td>
 												<div class="media">
 													<div class="media-body">
-														<a href="question/{{ question.pk }}">
+														<a href="/question/{{ question.pk }}">
 															<h4 class="title" style="color=Black" >
 																{{ question.title }}
 																<span class="glyphicon  pull-right" style="font-family:inherit;color:crimson">{{ question.views }} Views</span>
@@ -121,7 +121,7 @@
 											<td>
 												<div class="media">
 													<div class="media-body">
-														<a href="question/{{ question.pk }}">
+														<a href="/question/{{ question.pk }}">
 															<h4 class="title" style="color=Black" >
 																{{ question.title }}
 																<span class="glyphicon  pull-right" style="font-family:inherit;color:crimson">{{ question.views }} Views</span>
