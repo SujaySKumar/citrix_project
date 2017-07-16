@@ -165,10 +165,12 @@
 					<form action="/add-question/" method="post">
 						{% csrf_token %}
 						<h5><label for="new_question" style="font-weight: 100;">Title: </label></h5>
-					<input id="new_question_title" type="text" name="new_question_title" size="65"  style="height:40px" required /><i id="spamyes" class="fa fa-times"style="font-size:30; color:transparent" aria-hidden="true"></i><i  id="spamno"class="fa fa-check" style="font-size:30 ;color:transparent" aria-hidden="true"></i>
+					
+					<input id="new_question_title" type="text" name="new_question_title"   class="form-control" required /><i id="spamyes" class="fa fa-times"style="font-size:30; color:transparent" aria-hidden="true"></i><i  id="spamno"class="fa fa-check" style="font-size:30 ;color:transparent" aria-hidden="true"></i>
 						<h5 ><label style="font-weight: 100;">Description: </label></h5>
-						<textarea id="new_question_description" cols="67" rows="8" name="new_question_description" required></textarea><br>
+						<textarea id="new_question_description" cols="67" rows="8"  class="form-control" name="new_question_description" required></textarea><br>
 						<br>
+				
 						<!-- <select name="question_tags"> -->
 						<!-- {% for tag in tag_list %} -->
 						<!-- <option value={{ tag.name }}>{{ tag.tagname }}</option> -->
