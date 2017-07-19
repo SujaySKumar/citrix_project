@@ -26,7 +26,7 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-								<a class="navbar-brand" href="/"><img src="{% static 'assets/img/citrix-logo-black.jpg' %}"></img>&nbsp;<span style="font-size:80%">Answers</span></a>
+								<a class="navbar-brand" href="/home/"><img src="{% static 'assets/img/citrix-logo-black.jpg' %}"></img>&nbsp;<span style="font-size:80%">Answers</span></a>
 
 						</div>
 						<div class="navigation">
@@ -54,23 +54,23 @@
 												<h4 style="font-weight:bold" align="center">{{ employee.citrix_username }} </h4>
 												{%if employee.rating >= 10 and employee.rating < 50 %}
 												<div align="center">
-												<img src="{% static 'assets/img/rating_level/rookie.png' %}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Rookie</span> 
+												<img src="{% static 'assets/img/rating_level/rookie.png' %}" title="{{employee.rating}}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Rookie</span> 
 												</div>
 												{%elif employee.rating >= 50 and employee.rating < 100 %}
 													<div align="center">
-														<img src="{% static 'assets/img/rating_level/beginner.png' %}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Beginner</span> 
+														<img src="{% static 'assets/img/rating_level/beginner.png' %}" title="{{employee.rating}}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Beginner</span> 
 													</div>
 												{%elif employee.rating >= 100 and employee.rating < 150 %}
 													<div align="center">
-														<img src="{% static 'assets/img/rating_level/amateur.png' %}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Amateur</span> 
+														<img src="{% static 'assets/img/rating_level/amateur.png' %}" title="{{employee.rating}}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Amateur</span> 
 													</div>
 												{%elif employee.rating >= 150 and employee.rating < 200 %}
 													<div align="center">
-														<img src="{% static 'assets/img/rating_level/intermediate.png' %}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Intermediate</span> 
+														<img src="{% static 'assets/img/rating_level/intermediate.png' %}" title="{{employee.rating}}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Intermediate</span> 
 													</div>
 												{%else %}
 													<div align="center">
-														<img src="{% static 'assets/img/rating_level/expert.png' %}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Expert</span> 
+														<img src="{% static 'assets/img/rating_level/expert.png' %}" title="{{employee.rating}}" width="7%" style="vertical-align:middle"> </img> <span style = "vertical-align: middle; font-size:15px">Expert</span> 
 													</div>
 												
 												{% endif %}
